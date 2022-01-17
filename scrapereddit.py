@@ -2,13 +2,16 @@ from email.mime import image
 import praw
 import pprint
 import requests
+import PIL
 from PIL import Image
 import os
+
+PIL.Image.MAX_IMAGE_PIXELS = 131460604
 
 reddit = praw.Reddit(client_id='KF-U6QbK3EMpmlAu5o5qsA', client_secret='fT1KeNPdtLcQZXO_5qYpVhB6jocf_g', user_agent='WallpaperScraper')
 
 def scrapeReddit(subreddit, numImages, min_width, min_height, savepath):
-    top_posts = reddit.subreddit(subreddit).top(limit=numImages)
+    top_posts = reddit.subreddit(subreddit).top("all",limit=numImages)
 
     # for post in top_posts:
     #     print(post.title)
@@ -27,7 +30,7 @@ def scrapeReddit(subreddit, numImages, min_width, min_height, savepath):
         print(post.url)
         img_data = requests.get(post.url).content
         filetype = post.url[post.url.rfind("."):]
-        filename = post.title.replace(" ","") + filetype
+        filename = post.title.replace(" ","").replace(".", "").replace("\'", "").replace("\"", "").replace("\\", "").replace("/", "") + filetype
         with open(f"{savepath}/{filename}", "wb") as handler:
             handler.write(img_data)
 
