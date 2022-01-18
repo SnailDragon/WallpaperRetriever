@@ -8,7 +8,7 @@ import os
 
 PIL.Image.MAX_IMAGE_PIXELS = 131460604
 
-reddit = praw.Reddit(client_id='KF-U6QbK3EMpmlAu5o5qsA', client_secret='fT1KeNPdtLcQZXO_5qYpVhB6jocf_g', user_agent='WallpaperScraper')
+reddit = praw.Reddit(client_id='', client_secret='', user_agent='WallpaperScraper')
 
 def scrapeReddit(subreddit, numImages, min_width, min_height, savepath):
     top_posts = reddit.subreddit(subreddit).top("all",limit=numImages)
